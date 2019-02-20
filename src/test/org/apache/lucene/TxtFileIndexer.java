@@ -26,7 +26,7 @@ public class TxtFileIndexer  extends TestCase {
         //indexDir is the directory that hosts Lucene's index files
         File   indexDir = new File("E:\\laboratory\\lucene-2.0.0\\index");
         //dataDir is the directory that hosts the text files that to be indexed
-        File   dataDir  = new File("E:\\laboratory\\lucene-2.0.0\\data");
+        File   dataDir  = new File("E:\\laboratory\\lucene-2.0.0\\resource\\data");
 
         Analyzer luceneAnalyzer = new StandardAnalyzer();
         File[] dataFiles  = dataDir.listFiles();

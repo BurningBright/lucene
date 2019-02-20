@@ -1,7 +1,10 @@
 .classpath
 .project
 .settings/
-index/
 out/
+target/
 *.iml
 .idea/
+*.cfs
+segments
+deletable

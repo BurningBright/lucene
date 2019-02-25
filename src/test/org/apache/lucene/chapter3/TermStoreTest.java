@@ -31,4 +31,31 @@ public class TermStoreTest {
         writer.close();
     }
 
+    @Test
+    public void testFDX() throws IOException {
+
+        String path = "resource/chapter3/tea-index";
+        if (!new File(path).exists())
+            new File(path).mkdirs();
+
+        Document doc1 = new Document();
+        Field f1 = new Field("name", "she sales sea shells by the sea shore",
+                Field.Store.YES, Field.Index.TOKENIZED);
+        doc1.add(f1);
+        IndexWriter writer = new IndexWriter(path, new StandardAnalyzer(), true);
+        writer.setUseCompoundFile(false);
+        writer.addDocument(doc1);
+
+        Document doc2 = new Document();
+        Field f2 = new Field("game", "tim tells tea tales to the tea thief",
+                Field.Store.YES, Field.Index.TOKENIZED);
+        doc2.add(f2);
+        writer.setUseCompoundFile(false);
+        writer.addDocument(doc2);
+
+        writer.close();
+    }
+
+
+
 }

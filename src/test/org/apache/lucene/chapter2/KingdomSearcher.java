@@ -29,7 +29,7 @@ public class KingdomSearcher {
             while (termDocs.next()) {
                 System.out.println("find " + termDocs.freq() + " matches in ");
                 System.out.println(searcher.getIndexReader().document(termDocs.doc()).
-                        getField("fileName").stringValue());
+                        getField("title").stringValue());
             }
 
             System.out.println("time " + watch.elapsedTime());

@@ -7,6 +7,8 @@ import org.apache.lucene.index.IndexWriter;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Created by ChenGuang.Lin on 2019-02-20.
@@ -17,17 +19,23 @@ public class KingdomIndexer {
         try {
             IndexWriter writer = new IndexWriter(outputDir, new MMAnalyzer(), true);
             File fileDir = new File(inputDir);
+            File[] files = sortFiles(fileDir);
 
-            File[] files = fileDir.listFiles();
-
+            int i = 0;
             for (File file: files) {
                 String fileName = file.getName();
                 if (fileName.matches(".*\\.txt")) {
                     Document doc = new Document();
-                    Field field = new Field("fileName", fileName, Field.Store.YES, Field.Index.TOKENIZED);
+
+                    i++;
+                    String id = i > 99 ? "" + i : (i > 9 ? "0" + i : "00" + i);
+                    Field field = new Field("id", id, Field.Store.YES, Field.Index.TOKENIZED);
                     doc.add(field);
 
-                    field = new Field("content", fileName, Field.Store.NO, Field.Index.TOKENIZED);
+                    field = new Field("title", fileName, Field.Store.YES, Field.Index.TOKENIZED);
+                    doc.add(field);
+
+                    field = new Field("content", loadFile2Str(file), Field.Store.NO, Field.Index.TOKENIZED);
                     doc.add(field);
 
                     writer.addDocument(doc);
@@ -55,6 +63,26 @@ public class KingdomIndexer {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private File[] sortFiles(File directory) {
+        File[] files = directory.listFiles();
+        Arrays.sort(files, new Comparator<File>() {
+            public int compare(File f1, File f2) {
+                long diff = f1.lastModified() - f2.lastModified();
+                if (diff > 0)
+                    return 1;
+                else if (diff == 0)
+                    return 0;
+                else
+                    return -1;
+            }
+
+            public boolean equals(Object obj) {
+                return true;
+            }
+        });
+        return files;
     }
 
     @Test

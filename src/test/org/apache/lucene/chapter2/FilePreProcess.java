@@ -13,8 +13,8 @@ public class FilePreProcess {
 
     public static void preprocess(File file, String destDir, String tmpFileName) {
         try {
-            splitFile(charactorProcess(file, destDir + tmpFileName), destDir);
-        } catch (IOException e) {
+            splitFile(charactorProcess(file, tmpFileName), destDir);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -35,7 +35,7 @@ public class FilePreProcess {
         return new File(destFile);
     }
 
-    public static void splitFile(File file, String destDir) throws IOException {
+    public static void splitFile(File file, String destDir) throws IOException, InterruptedException {
         BufferedWriter writer = null;
         BufferedReader reader = new BufferedReader(new FileReader(file));
 
@@ -54,7 +54,7 @@ public class FilePreProcess {
                 writer.write(line);
                 writer.write("\r\n");
             }
-
+            Thread.sleep(500);
         }
         if (writer != null) writer.close();
     }
@@ -65,6 +65,7 @@ public class FilePreProcess {
         map.put("，", ",");
         map.put("。", ".");
         map.put("．", ".");
+        map.put("；", ";");
         map.put("＜", "<");
         map.put("＞", ">");
         map.put("《", "<");
@@ -100,7 +101,7 @@ public class FilePreProcess {
         // 三国演义拆分文件
         String destDir = "resource/chapter2/3Kingdoms/";
         // 三国演义临时文件
-        String tmpFile = "Romance of the Three Kingdoms.tmp";
+        String tmpFile = "resource/chapter2/Romance of the Three Kingdoms.tmp";
 
         if (!new File(destDir).exists()) new File(destDir).mkdirs();
 

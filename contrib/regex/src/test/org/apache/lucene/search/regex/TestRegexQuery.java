@@ -58,13 +58,13 @@ public class TestRegexQuery extends TestCase {
   private Term newTerm(String value) { return new Term(FN, value); }
 
   private int  regexQueryNrHits(String regex) throws Exception {
-    RegexQuery query = new RegexQuery( newTerm(regex));
+    org.apache.lucene.search.regex.RegexQuery query = new org.apache.lucene.search.regex.RegexQuery( newTerm(regex));
     return searcher.search(query).length();
   }
 
   private int  spanRegexQueryNrHits(String regex1, String regex2, int slop, boolean ordered) throws Exception {
-    SpanRegexQuery srq1 = new SpanRegexQuery( newTerm(regex1));
-    SpanRegexQuery srq2 = new SpanRegexQuery( newTerm(regex2));
+    org.apache.lucene.search.regex.SpanRegexQuery srq1 = new org.apache.lucene.search.regex.SpanRegexQuery( newTerm(regex1));
+    org.apache.lucene.search.regex.SpanRegexQuery srq2 = new org.apache.lucene.search.regex.SpanRegexQuery( newTerm(regex2));
     SpanNearQuery query = new SpanNearQuery( new SpanQuery[]{srq1, srq2}, slop, ordered);
     return searcher.search(query).length();
   }
@@ -90,10 +90,10 @@ public class TestRegexQuery extends TestCase {
   }
 
   public void testEquals() throws Exception {
-    RegexQuery query1 = new RegexQuery( newTerm("foo.*"));
-    query1.setRegexImplementation(new JakartaRegexpCapabilities());
+    org.apache.lucene.search.regex.RegexQuery query1 = new org.apache.lucene.search.regex.RegexQuery( newTerm("foo.*"));
+    query1.setRegexImplementation(new org.apache.lucene.search.regex.JakartaRegexpCapabilities());
 
-    RegexQuery query2 = new RegexQuery( newTerm("foo.*"));
+    org.apache.lucene.search.regex.RegexQuery query2 = new org.apache.lucene.search.regex.RegexQuery( newTerm("foo.*"));
     assertFalse(query1.equals(query2));
   }
 

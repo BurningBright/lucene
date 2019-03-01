@@ -31,7 +31,7 @@ public class TestSpanRegexQuery extends TestCase {
     writer.close();
 
     IndexSearcher searcher = new IndexSearcher(directory);
-    SpanRegexQuery srq = new SpanRegexQuery(new Term("field", "aut.*"));
+    org.apache.lucene.search.regex.SpanRegexQuery srq = new org.apache.lucene.search.regex.SpanRegexQuery(new Term("field", "aut.*"));
     SpanFirstQuery sfq = new SpanFirstQuery(srq, 1);
 //    SpanNearQuery query = new SpanNearQuery(new SpanQuery[] {srq, stq}, 6, true);
     Hits hits = searcher.search(sfq);

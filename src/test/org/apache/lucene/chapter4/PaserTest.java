@@ -94,8 +94,23 @@ public class PaserTest {
     public void fieldTest() throws IOException, ParseException {
         IndexSearcher searcher = new IndexSearcher(INDEX_PATH);
         QueryParser parser = new QueryParser("title", new StandardAnalyzer());
-        Query query = parser.parse("fellow content:one");
+        parser.setDefaultOperator(QueryParser.AND_OPERATOR);
+        Query query = parser.parse("fellow content:sickliest");
         System.out.println(query);
+        searcher.search(query);
+
+        Hits hits = searcher.search(query);
+        System.out.println(hits.length());
+        for (int i=0; i<hits.length(); i++) {
+            System.out.println(hits.doc(i).getField("title"));
+        }
+    }
+
+    @Test
+    public void rangeTest() throws IOException, ParseException {
+        IndexSearcher searcher = new IndexSearcher(INDEX_PATH);
+        QueryParser parser = new QueryParser("id", new StandardAnalyzer());
+        Query query = parser.parse("[005 TO 007]");
         searcher.search(query);
 
         Hits hits = searcher.search(query);

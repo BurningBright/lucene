@@ -22,12 +22,18 @@ public class CitesIndexer {
             IndexWriter writer = new IndexWriter(outputDir, new StandardAnalyzer(), true);
             File fileDir = new File(inputDir);
 
+            int i = 0;
             for (File file: fileDir.listFiles()) {
                 String fileName = file.getName();
                 if (fileName.matches(".*\\.txt")) {
                     Document doc = new Document();
 
-                    Field field = new Field("title", fileName, Field.Store.YES, Field.Index.TOKENIZED);
+                    i++;
+                    String id = i > 99 ? "" + i : (i > 9 ? "0" + i : "00" + i);
+                    Field field = new Field("id", id, Field.Store.YES, Field.Index.TOKENIZED);
+                    doc.add(field);
+
+                    field = new Field("title", fileName, Field.Store.YES, Field.Index.TOKENIZED);
                     doc.add(field);
 
                     field = new Field("content", loadFile2Str(file), Field.Store.NO, Field.Index.TOKENIZED);

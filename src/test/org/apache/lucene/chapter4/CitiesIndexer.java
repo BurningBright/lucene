@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by ChenGuang.Lin on 2019-03-01.
  */
-public class CitesIndexer {
+public class CitiesIndexer {
 
     public void createIndex(String inputDir, String outputDir) {
         try {

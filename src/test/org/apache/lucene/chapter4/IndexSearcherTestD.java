@@ -20,11 +20,11 @@ public class IndexSearcherTestD {
     @Test
     public void testMultiSearch() throws IOException, ParseException {
 
+        String[] fields = {"id", "title"};
         String[] queries = {"[005 TO 007]", "fellow"};
-        String[] fileds = {"id", "title"};
 
-        BooleanClause.Occur [] clauses = {BooleanClause.Occur.MUST, BooleanClause.Occur.MUST};
-        Query query  = MultiFieldQueryParser.parse(queries, fileds, clauses, new StandardAnalyzer());
+        BooleanClause.Occur [] clauses = {BooleanClause.Occur.MUST, BooleanClause.Occur.SHOULD};
+        Query query  = MultiFieldQueryParser.parse(queries, fields, clauses, new StandardAnalyzer());
 
         IndexSearcher kSearcher = new IndexSearcher(INDEX_PATH_KINGDOM);
         IndexSearcher cSearcher = new IndexSearcher(INDEX_PATH_CITIES);

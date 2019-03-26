@@ -5,6 +5,7 @@ import org.apache.lucene.chapter2.KingdomIndexer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.util.IndexFileUtil;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -37,7 +38,7 @@ public class YinYangIndexer {
                     field = new Field("title", fileName, Field.Store.YES, Field.Index.TOKENIZED);
                     doc.add(field);
 
-                    field = new Field("content", loadFile2Str(file), Field.Store.NO, Field.Index.TOKENIZED);
+                    field = new Field("content", IndexFileUtil.loadFile2Str(file), Field.Store.NO, Field.Index.TOKENIZED);
                     doc.add(field);
 
                     field = new Field("price", "" + (int)(Math.random() * 10), Field.Store.YES, Field.Index.TOKENIZED);
@@ -50,23 +51,6 @@ public class YinYangIndexer {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private String loadFile2Str(File file) {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            StringBuffer buffer = new StringBuffer();
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line);
-            }
-
-            return buffer.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
